@@ -1,0 +1,239 @@
+--- 0 seconds
+
+
+### Cleaning old files ###
+rm -f objects/Fraction.o *.o test* demo*
+rm -f StudentTest*.cpp
+
+
+### Check 1: our demo program should compile with your class
+! timeout 20 make -j8 -f Makefile demo
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile Demo.cpp -o Demo.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile sources/Fraction.cpp -o objects/Fraction.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources Demo.o objects/Fraction.o -o demo
+--- 0 seconds
+### Score 1: 100
+
+
+### Check 2: our demo program should run without errors
+! timeout 20 ./demo
+a: b: 
+a+b
+a-b
+a/b
+a*b
+2.3*b
+a+2.421
+
+
+c >=b ? : 1
+ a is bigger than 1.1
+--- 0 seconds
+### Score 2: 100
+
+
+### Check 3: your test should compile 
+! timeout 20 make -j8 -f Makefile test
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile TestCounter.cpp -o TestCounter.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile Test.cpp -o Test.o
+In file included from Test.cpp:1:
+./doctest.h:1541:9: error: static_assert failed due to requirement 'deferred_false<int>::value' "Expression Too Complex Please Rewrite As Binary Comparison!"
+        DOCTEST_FORBIT_EXPRESSION(Expression_lhs, =)
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./doctest.h:1390:9: note: expanded from macro 'DOCTEST_FORBIT_EXPRESSION'
+        static_assert(deferred_false<R>::value,                                                    \
+        ^             ~~~~~~~~~~~~~~~~~~~~~~~~
+Test.cpp:32:31: note: in instantiation of function template specialization 'doctest::detail::Expression_lhs<int>::operator=<int>' requested here
+    CHECK(frac.getNumerator() = -3);
+                              ^
+1 error generated.
+make: *** [Makefile:32: Test.o] Error 1
+make: *** Waiting for unfinished jobs....
+*** Command failed. Exit code: 2 ***
+--- 2 seconds
+### Score 3: 0
+
+
+### Check 4: you should write some new tests
+! timeout 20 ./test
+timeout: failed to run command ‘./test’: No such file or directory
+*** Command failed. Exit code: 127 ***
+--- 2 seconds
+### Score 4: 0
+
+
+Grade: 50
+
+adnan@adnan-VirtualBox:~/Desktop/cpp/Ex3/cpp_Fraction_a_part1$ make clean
+rm -f objects/Fraction.o *.o test* demo*
+rm -f StudentTest*.cpp
+adnan@adnan-VirtualBox:~/Desktop/cpp/Ex3/cpp_Fraction_a_part1$ bash grade
+--- 0 seconds
+
+
+### Cleaning old files ###
+rm -f objects/Fraction.o *.o test* demo*
+rm -f StudentTest*.cpp
+
+
+### Check 1: our demo program should compile with your class
+! timeout 20 make -j8 -f Makefile demo
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile Demo.cpp -o Demo.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile sources/Fraction.cpp -o objects/Fraction.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources Demo.o objects/Fraction.o -o demo
+--- 1 seconds
+### Score 1: 100
+
+
+### Check 2: our demo program should run without errors
+! timeout 20 ./demo
+a: b: 
+a+b
+a-b
+a/b
+a*b
+2.3*b
+a+2.421
+
+
+c >=b ? : 1
+ a is bigger than 1.1
+--- 1 seconds
+### Score 2: 100
+
+
+### Check 3: your test should compile 
+! timeout 20 make -j8 -f Makefile test
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile TestCounter.cpp -o TestCounter.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile Test.cpp -o Test.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources TestCounter.o Test.o objects/Fraction.o -o test
+--- 3 seconds
+### Score 3: 100
+
+
+### Check 4: you should write some new tests
+! timeout 20 ./test
+[doctest] doctest version is "2.4.11"
+[doctest] run with "--help" for options
+===============================================================================
+Test.cpp:6:
+TEST CASE:  Divide by zero should throw an exception
+
+Test.cpp:7: ERROR: CHECK_THROWS_AS( Fraction(3, 0), std::invalid_argument ) did NOT throw at all!
+
+Test.cpp:8: ERROR: CHECK_THROWS( Fraction(5,0) ) did NOT throw at all!
+
+Test.cpp:13: ERROR: CHECK_THROWS( a/b ) did NOT throw at all!
+
+Test.cpp:17: ERROR: CHECK_THROWS( c/b ) did NOT throw at all!
+
+===============================================================================
+Test.cpp:20:
+TEST CASE:  Fraction with large numbers
+
+Test.cpp:23: ERROR: CHECK( frac.toString() == "123456789/987654321" ) is NOT correct!
+  values: CHECK(  == 123456789/987654321 )
+
+Test.cpp:27: ERROR: CHECK( frac1.toString() == "-123456789/987654321" ) is NOT correct!
+  values: CHECK(  == -123456789/987654321 )
+
+===============================================================================
+Test.cpp:30:
+TEST CASE:  Negative fraction
+
+Test.cpp:34: ERROR: CHECK( frac.toString() == "-3/4" ) is NOT correct!
+  values: CHECK(  == -3/4 )
+
+===============================================================================
+Test.cpp:37:
+TEST CASE:  Simplify fraction
+
+Test.cpp:41: ERROR: CHECK( frac1.toString() == "3/4" ) is NOT correct!
+  values: CHECK(  == 3/4 )
+
+Test.cpp:45: ERROR: CHECK( frac2.toString() == "4/5" ) is NOT correct!
+  values: CHECK(  == 4/5 )
+
+Test.cpp:50: ERROR: CHECK( frac3.toString() == "-3/4" ) is NOT correct!
+  values: CHECK(  == -3/4 )
+
+Test.cpp:54: ERROR: CHECK( frac4.toString() == "-4,5" ) is NOT correct!
+  values: CHECK(  == -4,5 )
+
+===============================================================================
+Test.cpp:58:
+TEST CASE:  Recurring decimal fraction
+
+Test.cpp:62: ERROR: CHECK( frac.toString() == "1/3" ) is NOT correct!
+  values: CHECK(  == 1/3 )
+
+Test.cpp:67: ERROR: CHECK( frac1.toString() == "-1/3" ) is NOT correct!
+  values: CHECK(  == -1/3 )
+
+===============================================================================
+Test.cpp:70:
+TEST CASE:  Denominator is not 0
+
+Test.cpp:80: ERROR: CHECK_FALSE( a<b ) is NOT correct!
+  values: CHECK_FALSE(  <   )
+
+Test.cpp:82: ERROR: CHECK_FALSE( a<=b ) is NOT correct!
+  values: CHECK_FALSE(  <=  )
+
+Test.cpp:83: ERROR: CHECK_FALSE( a==b ) is NOT correct!
+  values: CHECK_FALSE(  ==  )
+
+===============================================================================
+Test.cpp:96:
+TEST CASE:  Denominator is 0 throws error
+
+Test.cpp:100: ERROR: CHECK_THROWS( a+b ) did NOT throw at all!
+
+Test.cpp:101: ERROR: CHECK_THROWS( a-b ) did NOT throw at all!
+
+Test.cpp:102: ERROR: CHECK_THROWS( a*b ) did NOT throw at all!
+
+Test.cpp:103: ERROR: CHECK_THROWS( a/b ) did NOT throw at all!
+
+Test.cpp:105: ERROR: CHECK_THROWS( a++ ) did NOT throw at all!
+
+Test.cpp:106: ERROR: CHECK_THROWS( a-- ) did NOT throw at all!
+
+Test.cpp:107: ERROR: CHECK_THROWS( ++a ) did NOT throw at all!
+
+Test.cpp:108: ERROR: CHECK_THROWS( --a ) did NOT throw at all!
+
+===============================================================================
+Test.cpp:116:
+TEST CASE:  Compromise after arithmetic
+
+Test.cpp:129: ERROR: CHECK( a+b != f ) is NOT correct!
+  values: CHECK(  !=  )
+
+Test.cpp:130: ERROR: CHECK( a-b != c ) is NOT correct!
+  values: CHECK(  !=  )
+
+Test.cpp:131: ERROR: CHECK( a*b != d ) is NOT correct!
+  values: CHECK(  !=  )
+
+Test.cpp:132: ERROR: CHECK( a/b != e ) is NOT correct!
+  values: CHECK(  !=  )
+
+===============================================================================
+Test.cpp:145:
+TEST CASE:  Negative Fraction
+
+Test.cpp:151: ERROR: CHECK( a != b ) is NOT correct!
+  values: CHECK(  !=  )
+
+Test.cpp:156: ERROR: CHECK_FALSE( a > b ) is NOT correct!
+  values: CHECK_FALSE(  >   )
+
+Test.cpp:157: ERROR: CHECK_FALSE( a >= b ) is NOT correct!
+  values: CHECK_FALSE(  >=  )
+
+--- 3 seconds
+### Score 4: 100
+
+
+Grade: 100
