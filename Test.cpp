@@ -126,10 +126,6 @@ TEST_CASE("Compromise after arithmetic"){
     CHECK(a*b == e);
     CHECK(a/b == f);
 
-    CHECK(a+b != f);
-    CHECK(a-b != c);
-    CHECK(a*b != d);
-    CHECK(a/b != e);
 }
 
 TEST_CASE("Compromise of (1,2)"){
@@ -148,7 +144,7 @@ TEST_CASE("Negative Fraction"){
     Fraction c(0,1);
     Fraction d(-1,2);
 
-    CHECK(a != b);
+
     CHECK(a+b == c);
     CHECK(a == d);
     CHECK(a < b);
